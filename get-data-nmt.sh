@@ -46,8 +46,8 @@ set -- "${POSITIONAL[@]}"
 #
 if [ "$SRC" == "" ]; then echo "--src not provided"; exit; fi
 if [ "$TGT" == "" ]; then echo "--tgt not provided"; exit; fi
-if [ "$SRC" != "de" -a "$SRC" != "en" -a "$SRC" != "fr" -a "$SRC" != "ro" ]; then echo "unknown source language"; exit; fi
-if [ "$TGT" != "de" -a "$TGT" != "en" -a "$TGT" != "fr" -a "$TGT" != "ro" ]; then echo "unknown target language"; exit; fi
+if [ "$SRC" != "de" -a "$SRC" != "en" -a "$SRC" != "fr" -a "$SRC" != "ro" -a "$SRC" != "tdt" ]; then echo "unknown source language"; exit; fi
+if [ "$TGT" != "de" -a "$TGT" != "en" -a "$TGT" != "fr" -a "$TGT" != "ro" -a "$TGT" != "tdt" ]; then echo "unknown target language"; exit; fi
 if [ "$SRC" == "$TGT" ]; then echo "source and target cannot be identical"; exit; fi
 if [ "$SRC" \> "$TGT" ]; then echo "please ensure SRC < TGT"; exit; fi
 if [ "$RELOAD_CODES" != "" ] && [ ! -f "$RELOAD_CODES" ]; then echo "cannot locate BPE codes"; exit; fi
@@ -138,6 +138,13 @@ if [ "$SRC" == "en" -a "$TGT" == "ro" ]; then
   PARA_TGT_VALID=$PARA_PATH/dev/newsdev2016-enro-ref.ro
   PARA_SRC_TEST=$PARA_PATH/dev/newstest2016-roen-ref.en
   PARA_TGT_TEST=$PARA_PATH/dev/newstest2016-enro-ref.ro
+fi
+
+if [ "$SRC" == "en" -a "$TGT" == "tdt" ]; then
+  PARA_SRC_VALID=$PARA_PATH/dev/valid.en
+  PARA_TGT_VALID=$PARA_PATH/dev/valid.tdt
+  PARA_SRC_TEST=$PARA_PATH/dev/test.en
+  PARA_TGT_TEST=$PARA_PATH/dev/test.tdt
 fi
 
 # install tools
