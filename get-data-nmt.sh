@@ -343,17 +343,11 @@ wget -c http://data.statmt.org/wmt18/translation-task/dev.tgz
 echo "Extracting parallel data..."
 tar -xzf dev.tgz
 
-# check valid and test files are here
-if ! [[ -f "$PARA_SRC_VALID.sgm" ]]; then echo "$PARA_SRC_VALID.sgm is not found!"; exit; fi
-if ! [[ -f "$PARA_TGT_VALID.sgm" ]]; then echo "$PARA_TGT_VALID.sgm is not found!"; exit; fi
-if ! [[ -f "$PARA_SRC_TEST.sgm" ]];  then echo "$PARA_SRC_TEST.sgm is not found!";  exit; fi
-if ! [[ -f "$PARA_TGT_TEST.sgm" ]];  then echo "$PARA_TGT_TEST.sgm is not found!";  exit; fi
-
 echo "Tokenizing valid and test data..."
-eval "$INPUT_FROM_SGM < $PARA_SRC_VALID.sgm | $SRC_PREPROCESSING > $PARA_SRC_VALID"
-eval "$INPUT_FROM_SGM < $PARA_TGT_VALID.sgm | $TGT_PREPROCESSING > $PARA_TGT_VALID"
-eval "$INPUT_FROM_SGM < $PARA_SRC_TEST.sgm  | $SRC_PREPROCESSING > $PARA_SRC_TEST"
-eval "$INPUT_FROM_SGM < $PARA_TGT_TEST.sgm  | $TGT_PREPROCESSING > $PARA_TGT_TEST"
+eval "cat $PARA_SRC_VALID | $SRC_PREPROCESSING > $PARA_SRC_VALID"
+eval "cat $PARA_TGT_VALID | $TGT_PREPROCESSING > $PARA_TGT_VALID"
+eval "cat $PARA_SRC_TEST  | $SRC_PREPROCESSING > $PARA_SRC_TEST"
+eval "cat $PARA_TGT_TEST  | $TGT_PREPROCESSING > $PARA_TGT_TEST"
 
 echo "Applying BPE to valid and test files..."
 $FASTBPE applybpe $PARA_SRC_VALID_BPE $PARA_SRC_VALID $BPE_CODES $SRC_VOCAB
